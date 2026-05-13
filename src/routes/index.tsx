@@ -56,6 +56,7 @@ function TriviaScorer() {
     newTeam("Team 2"),
   ]);
   const [hydrated, setHydrated] = useState(false);
+  const [ascending, setAscending] = useState(false);
 
   useEffect(() => {
     const s = loadState();
