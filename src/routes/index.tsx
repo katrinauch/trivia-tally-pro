@@ -255,7 +255,7 @@ function TriviaScorer() {
           {(ascending ? [...ranked].reverse() : ranked).map((t, i) => {
             const rankIndex = ranked.findIndex((r) => r.id === t.id);
             const total = totals.get(t.id) ?? 0;
-            const top = i === 0 && total > 0;
+            const top = rankIndex === 0 && total > 0;
             return (
               <li
                 key={t.id}
@@ -270,16 +270,16 @@ function TriviaScorer() {
                   <span
                     className={
                       "font-display text-3xl tabular-nums " +
-                      (i === 0
+                      (rankIndex === 0
                         ? "text-gold"
-                        : i === 1
+                        : rankIndex === 1
                         ? "text-silver"
-                        : i === 2
+                        : rankIndex === 2
                         ? "text-bronze"
                         : "text-muted-foreground")
                     }
                   >
-                    {i + 1}
+                    {rankIndex + 1}
                   </span>
                   <span className="text-lg font-semibold text-foreground">
                     {t.name || <span className="text-muted-foreground">Unnamed team</span>}
