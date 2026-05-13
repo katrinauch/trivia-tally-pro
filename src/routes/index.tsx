@@ -184,6 +184,7 @@ function TriviaScorer() {
               <div className="mt-5 grid grid-cols-3 gap-3 sm:grid-cols-6">
                 {t.scores.map((s, i) => {
                   const isDouble = t.doubleRound === i;
+                  const locked = t.doubleRound !== null && !isDouble;
                   return (
                     <div key={i} className="flex flex-col">
                       <label
