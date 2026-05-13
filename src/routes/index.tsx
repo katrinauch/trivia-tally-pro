@@ -211,10 +211,14 @@ function TriviaScorer() {
                       <button
                         type="button"
                         onClick={() => setDoubleRound(t.id, i)}
+                        disabled={locked}
+                        title={locked ? "×2 already used this game — unlock the active round first" : isDouble ? "Click to unlock ×2" : "Use ×2 on this round"}
                         className={
                           "mt-1.5 inline-flex h-7 items-center justify-center rounded-md text-xs font-semibold uppercase tracking-wider transition " +
                           (isDouble
                             ? "bg-primary text-primary-foreground shadow-sm"
+                            : locked
+                            ? "bg-muted text-muted-foreground/50 cursor-not-allowed"
                             : "bg-secondary text-muted-foreground hover:bg-accent hover:text-accent-foreground")
                         }
                         aria-pressed={isDouble}
