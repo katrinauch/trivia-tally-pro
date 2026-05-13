@@ -239,12 +239,21 @@ function TriviaScorer() {
 
       {/* Leaderboard */}
       <section className="mt-12">
-        <div className="mb-4 flex items-center gap-2">
-          <Trophy className="h-5 w-5 text-primary" />
-          <h2 className="font-display text-3xl">Leaderboard</h2>
+        <div className="mb-4 flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2">
+            <Trophy className="h-5 w-5 text-primary" />
+            <h2 className="font-display text-3xl">Leaderboard</h2>
+          </div>
+          <div className="flex items-center gap-2">
+            <Label htmlFor="sort-toggle" className="text-xs uppercase tracking-widest text-muted-foreground">
+              {ascending ? "Low → High" : "High → Low"}
+            </Label>
+            <Switch id="sort-toggle" checked={ascending} onCheckedChange={setAscending} />
+          </div>
         </div>
         <ol className="grid gap-2">
-          {ranked.map((t, i) => {
+          {(ascending ? [...ranked].reverse() : ranked).map((t, i) => {
+            const rankIndex = ranked.findIndex((r) => r.id === t.id);
             const total = totals.get(t.id) ?? 0;
             const top = i === 0 && total > 0;
             return (
