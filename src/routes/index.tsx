@@ -4,6 +4,8 @@ import { Trophy, Plus, Trash2, Beer } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 
 export const Route = createFileRoute("/")({
   component: TriviaScorer,
@@ -54,6 +56,7 @@ function TriviaScorer() {
     newTeam("Team 2"),
   ]);
   const [hydrated, setHydrated] = useState(false);
+  const [ascending, setAscending] = useState(false);
 
   useEffect(() => {
     const s = loadState();
@@ -236,14 +239,23 @@ function TriviaScorer() {
 
       {/* Leaderboard */}
       <section className="mt-12">
-        <div className="mb-4 flex items-center gap-2">
-          <Trophy className="h-5 w-5 text-primary" />
-          <h2 className="font-display text-3xl">Leaderboard</h2>
+        <div className="mb-4 flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2">
+            <Trophy className="h-5 w-5 text-primary" />
+            <h2 className="font-display text-3xl">Leaderboard</h2>
+          </div>
+          <div className="flex items-center gap-2">
+            <Label htmlFor="sort-toggle" className="text-xs uppercase tracking-widest text-muted-foreground">
+              {ascending ? "Low → High" : "High → Low"}
+            </Label>
+            <Switch id="sort-toggle" checked={ascending} onCheckedChange={setAscending} />
+          </div>
         </div>
         <ol className="grid gap-2">
-          {ranked.map((t, i) => {
+          {(ascending ? [...ranked].reverse() : ranked).map((t, i) => {
+            const rankIndex = ranked.findIndex((r) => r.id === t.id);
             const total = totals.get(t.id) ?? 0;
-            const top = i === 0 && total > 0;
+            const top = rankIndex === 0 && total > 0;
             return (
               <li
                 key={t.id}
@@ -258,16 +270,16 @@ function TriviaScorer() {
                   <span
                     className={
                       "font-display text-3xl tabular-nums " +
-                      (i === 0
+                      (rankIndex === 0
                         ? "text-gold"
-                        : i === 1
+                        : rankIndex === 1
                         ? "text-silver"
-                        : i === 2
+                        : rankIndex === 2
                         ? "text-bronze"
                         : "text-muted-foreground")
                     }
                   >
-                    {i + 1}
+                    {rankIndex + 1}
                   </span>
                   <span className="text-lg font-semibold text-foreground">
                     {t.name || <span className="text-muted-foreground">Unnamed team</span>}
