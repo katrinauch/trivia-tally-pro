@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
-import { Trophy, Plus, Trash2, Beer, X2 } from "lucide-react";
+import { Trophy, Plus, Trash2, Beer, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
@@ -69,7 +69,7 @@ function TriviaScorer() {
   const totals = useMemo(() => {
     const map = new Map<string, number>();
     for (const t of teams) {
-      const total = t.scores.reduce((sum, s, i) => {
+      const total = t.scores.reduce<number>((sum, s, i) => {
         if (s == null) return sum;
         const mult = doubleRound === i ? 2 : 1;
         return sum + s * mult;
@@ -152,7 +152,7 @@ function TriviaScorer() {
                       : "border-border bg-secondary/40 text-foreground hover:bg-secondary")
                   }
                 >
-                  <X2 className="h-3.5 w-3.5" />
+                  <X className="h-3.5 w-3.5" />
                   R{i + 1}
                 </button>
               );
