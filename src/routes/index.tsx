@@ -6,7 +6,130 @@ import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import logo from "@/assets/logo.png";
+
+type Lang = "en" | "fr" | "ja" | "es";
+
+const translations = {
+  en: {
+    metaTitle: "Pub Trivia Scorekeeper — 6 Rounds, Live Standings",
+    metaDesc: "Score pub trivia in real time. Track teams across 6 rounds, let each team pick a double-points round, and auto-sort the leaderboard.",
+    quizNight: "Quiz Night",
+    titlePub: "Pub Trivia",
+    titleScorer: "Scorekeeper",
+    tagline: "Six rounds. Each team picks one round to double. Leaderboard sorts itself.",
+    reset: "Reset",
+    addTeam: "Add team",
+    toDark: "Switch to dark mode",
+    toLight: "Switch to light mode",
+    language: "Language",
+    teamName: "Team name",
+    total: "Total",
+    removeTeam: "Remove team",
+    round: "Round",
+    x2Locked: "×2 already used this game — unlock the active round first",
+    x2Unlock: "Click to unlock ×2",
+    x2Use: "Use ×2 on this round",
+    leaderboard: "Leaderboard",
+    lowHigh: "Low → High",
+    highLow: "High → Low",
+    unnamed: "Unnamed team",
+    footer: "Scores save locally in your browser.",
+    defaultTeam: (n: number) => `Team ${n}`,
+  },
+  fr: {
+    metaTitle: "Marqueur de Quiz de Pub — 6 manches, classement en direct",
+    metaDesc: "Comptez les scores de quiz de pub en temps réel. Suivez les équipes sur 6 manches, choisissez une manche à points doublés, et triez automatiquement le classement.",
+    quizNight: "Soirée Quiz",
+    titlePub: "Marqueur de",
+    titleScorer: "Quiz de Pub",
+    tagline: "Six manches. Chaque équipe choisit une manche à doubler. Le classement se trie tout seul.",
+    reset: "Réinitialiser",
+    addTeam: "Ajouter une équipe",
+    toDark: "Passer en mode sombre",
+    toLight: "Passer en mode clair",
+    language: "Langue",
+    teamName: "Nom de l'équipe",
+    total: "Total",
+    removeTeam: "Supprimer l'équipe",
+    round: "Manche",
+    x2Locked: "×2 déjà utilisé — déverrouillez d'abord la manche active",
+    x2Unlock: "Cliquez pour déverrouiller ×2",
+    x2Use: "Utiliser ×2 sur cette manche",
+    leaderboard: "Classement",
+    lowHigh: "Bas → Haut",
+    highLow: "Haut → Bas",
+    unnamed: "Équipe sans nom",
+    footer: "Les scores sont enregistrés localement dans votre navigateur.",
+    defaultTeam: (n: number) => `Équipe ${n}`,
+  },
+  ja: {
+    metaTitle: "パブクイズ・スコアキーパー — 6ラウンド、ライブ順位",
+    metaDesc: "パブクイズの得点をリアルタイムで記録。6ラウンドにわたってチームを追跡し、各チームがダブルポイントのラウンドを選択でき、リーダーボードが自動的に並びます。",
+    quizNight: "クイズナイト",
+    titlePub: "パブクイズ",
+    titleScorer: "スコアキーパー",
+    tagline: "6ラウンド。各チームが1ラウンドを2倍にできます。順位は自動で並びます。",
+    reset: "リセット",
+    addTeam: "チームを追加",
+    toDark: "ダークモードに切り替え",
+    toLight: "ライトモードに切り替え",
+    language: "言語",
+    teamName: "チーム名",
+    total: "合計",
+    removeTeam: "チームを削除",
+    round: "ラウンド",
+    x2Locked: "×2はすでに使用済み — 先にアクティブなラウンドを解除してください",
+    x2Unlock: "クリックして×2を解除",
+    x2Use: "このラウンドで×2を使用",
+    leaderboard: "リーダーボード",
+    lowHigh: "低 → 高",
+    highLow: "高 → 低",
+    unnamed: "名前なしチーム",
+    footer: "スコアはブラウザにローカル保存されます。",
+    defaultTeam: (n: number) => `チーム ${n}`,
+  },
+  es: {
+    metaTitle: "Marcador de Trivia de Bar — 6 rondas, clasificación en vivo",
+    metaDesc: "Lleva la puntuación de trivia de bar en tiempo real. Sigue a los equipos en 6 rondas, deja que cada equipo elija una ronda de puntos dobles y ordena la clasificación automáticamente.",
+    quizNight: "Noche de Trivia",
+    titlePub: "Marcador de",
+    titleScorer: "Trivia de Bar",
+    tagline: "Seis rondas. Cada equipo elige una ronda para doblar. La clasificación se ordena sola.",
+    reset: "Reiniciar",
+    addTeam: "Añadir equipo",
+    toDark: "Cambiar a modo oscuro",
+    toLight: "Cambiar a modo claro",
+    language: "Idioma",
+    teamName: "Nombre del equipo",
+    total: "Total",
+    removeTeam: "Eliminar equipo",
+    round: "Ronda",
+    x2Locked: "×2 ya usado — desbloquea primero la ronda activa",
+    x2Unlock: "Haz clic para desbloquear ×2",
+    x2Use: "Usar ×2 en esta ronda",
+    leaderboard: "Clasificación",
+    lowHigh: "Bajo → Alto",
+    highLow: "Alto → Bajo",
+    unnamed: "Equipo sin nombre",
+    footer: "Las puntuaciones se guardan localmente en tu navegador.",
+    defaultTeam: (n: number) => `Equipo ${n}`,
+  },
+} as const;
+
+const LANG_LABELS: Record<Lang, string> = {
+  en: "English",
+  fr: "Français",
+  ja: "日本語",
+  es: "Español",
+};
 
 export const Route = createFileRoute("/")({
   component: TriviaScorer,
@@ -28,6 +151,7 @@ type Team = {
 };
 
 const STORAGE_KEY = "pub-trivia-state-v2";
+const LANG_KEY = "pub-trivia-lang";
 
 function newTeam(name = ""): Team {
   return {
@@ -52,6 +176,9 @@ function loadState(): Team[] | null {
 }
 
 function TriviaScorer() {
+  const [lang, setLang] = useState<Lang>("en");
+  const t = translations[lang];
+
   const [teams, setTeams] = useState<Team[]>([
     newTeam("Team 1"),
     newTeam("Team 2"),
@@ -64,6 +191,8 @@ function TriviaScorer() {
     try {
       const stored = localStorage.getItem("pub-trivia-theme") as "light" | "dark" | null;
       if (stored) setTheme(stored);
+      const storedLang = localStorage.getItem(LANG_KEY) as Lang | null;
+      if (storedLang && storedLang in translations) setLang(storedLang);
     } catch { /* no-op */ }
   }, []);
 
@@ -72,6 +201,11 @@ function TriviaScorer() {
     else document.documentElement.classList.remove("dark");
     try { localStorage.setItem("pub-trivia-theme", theme); } catch { /* no-op */ }
   }, [theme]);
+
+  useEffect(() => {
+    try { localStorage.setItem(LANG_KEY, lang); } catch { /* no-op */ }
+    if (typeof document !== "undefined") document.documentElement.lang = lang;
+  }, [lang]);
 
   useEffect(() => {
     const s = loadState();
@@ -86,13 +220,13 @@ function TriviaScorer() {
 
   const totals = useMemo(() => {
     const map = new Map<string, number>();
-    for (const t of teams) {
-      const total = t.scores.reduce<number>((sum, s, i) => {
+    for (const tm of teams) {
+      const total = tm.scores.reduce<number>((sum, s, i) => {
         if (s == null) return sum;
-        const mult = t.doubleRound === i ? 2 : 1;
+        const mult = tm.doubleRound === i ? 2 : 1;
         return sum + s * mult;
       }, 0);
-      map.set(t.id, total);
+      map.set(tm.id, total);
     }
     return map;
   }, [teams]);
@@ -103,34 +237,34 @@ function TriviaScorer() {
   );
 
   const updateName = (id: string, name: string) =>
-    setTeams((ts) => ts.map((t) => (t.id === id ? { ...t, name } : t)));
+    setTeams((ts) => ts.map((tm) => (tm.id === id ? { ...tm, name } : tm)));
 
   const updateScore = (id: string, idx: number, raw: string) => {
     const val = raw === "" ? null : Number(raw);
     setTeams((ts) =>
-      ts.map((t) => {
-        if (t.id !== id) return t;
-        const scores = [...t.scores];
+      ts.map((tm) => {
+        if (tm.id !== id) return tm;
+        const scores = [...tm.scores];
         scores[idx] = val == null || Number.isNaN(val) ? null : val;
-        return { ...t, scores };
+        return { ...tm, scores };
       }),
     );
   };
 
   const setDoubleRound = (id: string, idx: number) =>
     setTeams((ts) =>
-      ts.map((t) =>
-        t.id === id ? { ...t, doubleRound: t.doubleRound === idx ? null : idx } : t,
+      ts.map((tm) =>
+        tm.id === id ? { ...tm, doubleRound: tm.doubleRound === idx ? null : idx } : tm,
       ),
     );
 
   const addTeam = () =>
-    setTeams((ts) => [...ts, newTeam(`Team ${ts.length + 1}`)]);
+    setTeams((ts) => [...ts, newTeam(t.defaultTeam(ts.length + 1))]);
 
   const removeTeam = (id: string) =>
-    setTeams((ts) => (ts.length > 1 ? ts.filter((t) => t.id !== id) : ts));
+    setTeams((ts) => (ts.length > 1 ? ts.filter((tm) => tm.id !== id) : ts));
 
-  const resetAll = () => setTeams([newTeam("Team 1"), newTeam("Team 2")]);
+  const resetAll = () => setTeams([newTeam(t.defaultTeam(1)), newTeam(t.defaultTeam(2))]);
 
   return (
     <main className="mx-auto max-w-6xl px-4 py-10 sm:py-14">
@@ -146,38 +280,48 @@ function TriviaScorer() {
           <div>
             <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-border bg-accent/40 px-3 py-1 text-xs font-medium uppercase tracking-widest text-accent-foreground">
               <Beer className="h-3.5 w-3.5" />
-              Quiz Night
+              {t.quizNight}
             </div>
             <h1 className="text-5xl text-foreground sm:text-6xl">
-              Pub Trivia <span className="text-primary">Scorekeeper</span>
+              {t.titlePub} <span className="text-primary">{t.titleScorer}</span>
             </h1>
             <p className="mt-2 max-w-xl text-base text-muted-foreground">
-              Six rounds. Each team picks one round to double. Leaderboard sorts itself.
+              {t.tagline}
             </p>
           </div>
         </div>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
+          <Select value={lang} onValueChange={(v) => setLang(v as Lang)}>
+            <SelectTrigger className="h-9 w-[130px]" aria-label={t.language}>
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              {(Object.keys(LANG_LABELS) as Lang[]).map((code) => (
+                <SelectItem key={code} value={code}>{LANG_LABELS[code]}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
           <Button
             variant="outline"
             size="icon"
             onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-            title={theme === "light" ? "Switch to dark mode" : "Switch to light mode"}
-            aria-label={theme === "light" ? "Switch to dark mode" : "Switch to light mode"}
+            title={theme === "light" ? t.toDark : t.toLight}
+            aria-label={theme === "light" ? t.toDark : t.toLight}
           >
             {theme === "light" ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
           </Button>
-          <Button variant="outline" onClick={resetAll}>Reset</Button>
+          <Button variant="outline" onClick={resetAll}>{t.reset}</Button>
           <Button onClick={addTeam}>
-            <Plus className="mr-1 h-4 w-4" /> Add team
+            <Plus className="mr-1 h-4 w-4" /> {t.addTeam}
           </Button>
         </div>
       </header>
 
       {/* Team scoring cards */}
       <div className="grid gap-4">
-        {teams.map((t) => {
-          const rank = ranked.findIndex((r) => r.id === t.id);
-          const total = totals.get(t.id) ?? 0;
+        {teams.map((tm) => {
+          const rank = ranked.findIndex((r) => r.id === tm.id);
+          const total = totals.get(tm.id) ?? 0;
           const medal =
             rank === 0
               ? "text-gold"
@@ -187,30 +331,30 @@ function TriviaScorer() {
               ? "text-bronze"
               : "text-muted-foreground";
           return (
-            <Card key={t.id} className="border-border bg-card p-5 shadow-sm">
+            <Card key={tm.id} className="border-border bg-card p-5 shadow-sm">
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <div className="flex items-center gap-3">
                   <span className={"font-display text-3xl tabular-nums " + medal}>
                     #{rank + 1}
                   </span>
                   <Input
-                    value={t.name}
-                    onChange={(e) => updateName(t.id, e.target.value)}
-                    placeholder="Team name"
+                    value={tm.name}
+                    onChange={(e) => updateName(tm.id, e.target.value)}
+                    placeholder={t.teamName}
                     className="h-11 min-w-[200px] bg-input text-lg font-semibold"
                   />
                 </div>
                 <div className="flex items-baseline gap-3">
                   <span className="text-xs uppercase tracking-widest text-muted-foreground">
-                    Total
+                    {t.total}
                   </span>
                   <span className="font-display text-5xl tabular-nums text-foreground">
                     {total}
                   </span>
                   <button
-                    onClick={() => removeTeam(t.id)}
+                    onClick={() => removeTeam(tm.id)}
                     className="ml-2 rounded-md p-2 text-muted-foreground transition hover:bg-destructive/10 hover:text-destructive"
-                    aria-label="Remove team"
+                    aria-label={t.removeTeam}
                   >
                     <Trash2 className="h-4 w-4" />
                   </button>
@@ -218,9 +362,9 @@ function TriviaScorer() {
               </div>
 
               <div className="mt-5 grid grid-cols-3 gap-3 sm:grid-cols-6">
-                {t.scores.map((s, i) => {
-                  const isDouble = t.doubleRound === i;
-                  const locked = t.doubleRound !== null && !isDouble;
+                {tm.scores.map((s, i) => {
+                  const isDouble = tm.doubleRound === i;
+                  const locked = tm.doubleRound !== null && !isDouble;
                   return (
                     <div key={i} className="flex flex-col">
                       <label
@@ -229,13 +373,13 @@ function TriviaScorer() {
                           (isDouble ? "text-primary" : "text-muted-foreground")
                         }
                       >
-                        Round {i + 1}
+                        {t.round} {i + 1}
                       </label>
                       <Input
                         type="number"
                         inputMode="decimal"
                         value={s ?? ""}
-                        onChange={(e) => updateScore(t.id, i, e.target.value)}
+                        onChange={(e) => updateScore(tm.id, i, e.target.value)}
                         placeholder="–"
                         className={
                           "h-12 text-center text-lg font-semibold tabular-nums transition " +
@@ -246,9 +390,9 @@ function TriviaScorer() {
                       />
                       <button
                         type="button"
-                        onClick={() => setDoubleRound(t.id, i)}
+                        onClick={() => setDoubleRound(tm.id, i)}
                         disabled={locked}
-                        title={locked ? "×2 already used this game — unlock the active round first" : isDouble ? "Click to unlock ×2" : "Use ×2 on this round"}
+                        title={locked ? t.x2Locked : isDouble ? t.x2Unlock : t.x2Use}
                         className={
                           "mt-1.5 inline-flex h-7 items-center justify-center rounded-md text-xs font-semibold uppercase tracking-wider transition " +
                           (isDouble
@@ -275,23 +419,23 @@ function TriviaScorer() {
         <div className="mb-4 flex items-center justify-between gap-2">
           <div className="flex items-center gap-2">
             <Trophy className="h-5 w-5 text-primary" />
-            <h2 className="font-display text-3xl">Leaderboard</h2>
+            <h2 className="font-display text-3xl">{t.leaderboard}</h2>
           </div>
           <div className="flex items-center gap-2">
             <Label htmlFor="sort-toggle" className="text-xs uppercase tracking-widest text-muted-foreground">
-              {ascending ? "Low → High" : "High → Low"}
+              {ascending ? t.lowHigh : t.highLow}
             </Label>
             <Switch id="sort-toggle" checked={ascending} onCheckedChange={setAscending} />
           </div>
         </div>
         <ol className="grid gap-2">
-          {(ascending ? [...ranked].reverse() : ranked).map((t, i) => {
-            const rankIndex = ranked.findIndex((r) => r.id === t.id);
-            const total = totals.get(t.id) ?? 0;
+          {(ascending ? [...ranked].reverse() : ranked).map((tm) => {
+            const rankIndex = ranked.findIndex((r) => r.id === tm.id);
+            const total = totals.get(tm.id) ?? 0;
             const top = rankIndex === 0 && total > 0;
             return (
               <li
-                key={t.id}
+                key={tm.id}
                 className={
                   "flex items-center justify-between rounded-lg border px-5 py-4 transition " +
                   (top
@@ -315,7 +459,7 @@ function TriviaScorer() {
                     {rankIndex + 1}
                   </span>
                   <span className="text-lg font-semibold text-foreground">
-                    {t.name || <span className="text-muted-foreground">Unnamed team</span>}
+                    {tm.name || <span className="text-muted-foreground">{t.unnamed}</span>}
                   </span>
                 </div>
                 <span className="font-display text-4xl tabular-nums">{total}</span>
@@ -326,7 +470,7 @@ function TriviaScorer() {
       </section>
 
       <footer className="mt-12 text-center text-xs text-muted-foreground">
-        Scores save locally in your browser.
+        {t.footer}
       </footer>
     </main>
   );
