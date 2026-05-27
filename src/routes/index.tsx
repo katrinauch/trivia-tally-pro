@@ -11,7 +11,7 @@ export const Route = createFileRoute("/")({
   component: TriviaScorer,
   head: () => ({
     meta: [
-      { title: "Pub Trivia Scorer — 6 Rounds, Live Standings" },
+      { title: "Pub Trivia Scorekeeper — 6 Rounds, Live Standings" },
       { name: "description", content: "Score pub trivia in real time. Track teams across 6 rounds, let each team pick a double-points round, and auto-sort the leaderboard." },
     ],
   }),
@@ -140,7 +140,7 @@ function TriviaScorer() {
             Quiz Night
           </div>
           <h1 className="text-5xl text-foreground sm:text-6xl">
-            Pub Trivia <span className="text-primary">Scorer</span>
+            Pub Trivia <span className="text-primary">Scorekeeper</span>
           </h1>
           <p className="mt-2 max-w-xl text-base text-muted-foreground">
             Six rounds. Each team picks one round to double. Leaderboard sorts itself.
