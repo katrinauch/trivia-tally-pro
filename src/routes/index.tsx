@@ -57,6 +57,20 @@ function TriviaScorer() {
   ]);
   const [hydrated, setHydrated] = useState(false);
   const [ascending, setAscending] = useState(false);
+  const [theme, setTheme] = useState<"light" | "dark">("light");
+
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem("pub-trivia-theme") as "light" | "dark" | null;
+      if (stored) setTheme(stored);
+    } catch { /* no-op */ }
+  }, []);
+
+  useEffect(() => {
+    if (theme === "dark") document.documentElement.classList.add("dark");
+    else document.documentElement.classList.remove("dark");
+    try { localStorage.setItem("pub-trivia-theme", theme); } catch { /* no-op */ }
+  }, [theme]);
 
   useEffect(() => {
     const s = loadState();
