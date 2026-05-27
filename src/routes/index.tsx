@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
-import { Trophy, Plus, Trash2, Beer } from "lucide-react";
+import { Trophy, Plus, Trash2, Beer, Sun, Moon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
@@ -57,6 +57,20 @@ function TriviaScorer() {
   ]);
   const [hydrated, setHydrated] = useState(false);
   const [ascending, setAscending] = useState(false);
+  const [theme, setTheme] = useState<"light" | "dark">("light");
+
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem("pub-trivia-theme") as "light" | "dark" | null;
+      if (stored) setTheme(stored);
+    } catch { /* no-op */ }
+  }, []);
+
+  useEffect(() => {
+    if (theme === "dark") document.documentElement.classList.add("dark");
+    else document.documentElement.classList.remove("dark");
+    try { localStorage.setItem("pub-trivia-theme", theme); } catch { /* no-op */ }
+  }, [theme]);
 
   useEffect(() => {
     const s = loadState();
@@ -133,6 +147,15 @@ function TriviaScorer() {
           </p>
         </div>
         <div className="flex gap-2">
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+            title={theme === "light" ? "Switch to dark mode" : "Switch to light mode"}
+            aria-label={theme === "light" ? "Switch to dark mode" : "Switch to light mode"}
+          >
+            {theme === "light" ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
+          </Button>
           <Button variant="outline" onClick={resetAll}>Reset</Button>
           <Button onClick={addTeam}>
             <Plus className="mr-1 h-4 w-4" /> Add team

@@ -102,6 +102,20 @@ function RootShell({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <head>
+        <script
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var theme = localStorage.getItem('pub-trivia-theme');
+                  if (theme === 'dark') document.documentElement.classList.add('dark');
+                  else if (theme === 'light') document.documentElement.classList.remove('dark');
+                } catch(e) {}
+              })();
+            `,
+          }}
+        />
         <HeadContent />
       </head>
       <body>
