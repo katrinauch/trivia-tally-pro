@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
+import logo from "@/assets/logo.png";
 
 export const Route = createFileRoute("/")({
   component: TriviaScorer,
@@ -134,17 +135,26 @@ function TriviaScorer() {
   return (
     <main className="mx-auto max-w-6xl px-4 py-10 sm:py-14">
       <header className="mb-10 flex flex-col items-start gap-4 sm:flex-row sm:items-end sm:justify-between">
-        <div>
-          <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-border bg-accent/40 px-3 py-1 text-xs font-medium uppercase tracking-widest text-accent-foreground">
-            <Beer className="h-3.5 w-3.5" />
-            Quiz Night
+        <div className="flex items-center gap-4">
+          <img
+            src={logo}
+            alt="Pub Trivia Scorekeeper logo"
+            width={1024}
+            height={1024}
+            className="h-20 w-20 shrink-0 sm:h-24 sm:w-24"
+          />
+          <div>
+            <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-border bg-accent/40 px-3 py-1 text-xs font-medium uppercase tracking-widest text-accent-foreground">
+              <Beer className="h-3.5 w-3.5" />
+              Quiz Night
+            </div>
+            <h1 className="text-5xl text-foreground sm:text-6xl">
+              Pub Trivia <span className="text-primary">Scorekeeper</span>
+            </h1>
+            <p className="mt-2 max-w-xl text-base text-muted-foreground">
+              Six rounds. Each team picks one round to double. Leaderboard sorts itself.
+            </p>
           </div>
-          <h1 className="text-5xl text-foreground sm:text-6xl">
-            Pub Trivia <span className="text-primary">Scorekeeper</span>
-          </h1>
-          <p className="mt-2 max-w-xl text-base text-muted-foreground">
-            Six rounds. Each team picks one round to double. Leaderboard sorts itself.
-          </p>
         </div>
         <div className="flex gap-2">
           <Button
