@@ -147,6 +147,15 @@ function TriviaScorer() {
           </p>
         </div>
         <div className="flex gap-2">
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+            title={theme === "light" ? "Switch to dark mode" : "Switch to light mode"}
+            aria-label={theme === "light" ? "Switch to dark mode" : "Switch to light mode"}
+          >
+            {theme === "light" ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
+          </Button>
           <Button variant="outline" onClick={resetAll}>Reset</Button>
           <Button onClick={addTeam}>
             <Plus className="mr-1 h-4 w-4" /> Add team
