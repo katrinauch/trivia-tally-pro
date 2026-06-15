@@ -1,0 +1,7 @@
+# Pub Trivia Scorekeeper
+
+> Web app for scoring pub trivia games in real time. Track team scores across 6 rounds, let each team pick a double-points round, and watch the leaderboard sort itself.
+
+## Pages
+
+- [Home](/): The full scorekeeper — add teams, enter round scores, and view live standings.

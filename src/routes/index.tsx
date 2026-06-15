@@ -137,7 +137,11 @@ export const Route = createFileRoute("/")({
     meta: [
       { title: "Pub Trivia Scorekeeper — 6 Rounds, Live Standings" },
       { name: "description", content: "Score pub trivia in real time. Track teams across 6 rounds, let each team pick a double-points round, and auto-sort the leaderboard." },
+      { property: "og:title", content: "Pub Trivia Scorekeeper — 6 Rounds, Live Standings" },
+      { property: "og:description", content: "Score pub trivia in real time. Track teams across 6 rounds, let each team pick a double-points round, and auto-sort the leaderboard." },
+      { property: "og:url", content: "https://trivia-tally-pro.lovable.app/" },
     ],
+    links: [{ rel: "canonical", href: "https://trivia-tally-pro.lovable.app/" }],
   }),
 });
 
@@ -341,6 +345,7 @@ function TriviaScorer() {
                     value={tm.name}
                     onChange={(e) => updateName(tm.id, e.target.value)}
                     placeholder={t.teamName}
+                    aria-label={t.teamName}
                     className="h-11 min-w-[200px] bg-input text-lg font-semibold"
                   />
                 </div>
@@ -381,6 +386,7 @@ function TriviaScorer() {
                         value={s ?? ""}
                         onChange={(e) => updateScore(tm.id, i, e.target.value)}
                         placeholder="–"
+                        aria-label={`${tm.name || t.unnamed} — ${t.round} ${i + 1}`}
                         className={
                           "h-12 text-center text-lg font-semibold tabular-nums transition " +
                           (isDouble
