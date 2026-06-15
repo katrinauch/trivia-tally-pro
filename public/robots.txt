@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://trivia-tally-pro.lovable.app/sitemap.xml
