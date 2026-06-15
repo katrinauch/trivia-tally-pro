@@ -386,6 +386,7 @@ function TriviaScorer() {
                         value={s ?? ""}
                         onChange={(e) => updateScore(tm.id, i, e.target.value)}
                         placeholder="–"
+                        aria-label={`${tm.name || t.unnamed} — ${t.round} ${i + 1}`}
                         className={
                           "h-12 text-center text-lg font-semibold tabular-nums transition " +
                           (isDouble
