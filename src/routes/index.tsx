@@ -137,7 +137,11 @@ export const Route = createFileRoute("/")({
     meta: [
       { title: "Pub Trivia Scorekeeper — 6 Rounds, Live Standings" },
       { name: "description", content: "Score pub trivia in real time. Track teams across 6 rounds, let each team pick a double-points round, and auto-sort the leaderboard." },
+      { property: "og:title", content: "Pub Trivia Scorekeeper — 6 Rounds, Live Standings" },
+      { property: "og:description", content: "Score pub trivia in real time. Track teams across 6 rounds, let each team pick a double-points round, and auto-sort the leaderboard." },
+      { property: "og:url", content: "https://trivia-tally-pro.lovable.app/" },
     ],
+    links: [{ rel: "canonical", href: "https://trivia-tally-pro.lovable.app/" }],
   }),
 });
 
