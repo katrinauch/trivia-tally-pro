@@ -42,6 +42,7 @@ const translations = {
     highLow: "High → Low",
     unnamed: "Unnamed team",
     footer: "Scores save locally in your browser.",
+    searchPlaceholder: "Search teams…",
     defaultTeam: (n: number) => `Team ${n}`,
   },
   fr: {
@@ -68,6 +69,7 @@ const translations = {
     highLow: "Haut → Bas",
     unnamed: "Équipe sans nom",
     footer: "Les scores sont enregistrés localement dans votre navigateur.",
+    searchPlaceholder: "Rechercher des équipes…",
     defaultTeam: (n: number) => `Équipe ${n}`,
   },
   ja: {
@@ -94,6 +96,7 @@ const translations = {
     highLow: "高 → 低",
     unnamed: "名前なしチーム",
     footer: "スコアはブラウザにローカル保存されます。",
+    searchPlaceholder: "チームを検索…",
     defaultTeam: (n: number) => `チーム ${n}`,
   },
   es: {
@@ -120,6 +123,7 @@ const translations = {
     highLow: "Alto → Bajo",
     unnamed: "Equipo sin nombre",
     footer: "Las puntuaciones se guardan localmente en tu navegador.",
+    searchPlaceholder: "Buscar equipos…",
     defaultTeam: (n: number) => `Equipo ${n}`,
   },
 } as const;
@@ -183,13 +187,13 @@ function TriviaScorer() {
   const [lang, setLang] = useState<Lang>("en");
   const t = translations[lang];
 
-  const [teams, setTeams] = useState<Team[]>([
-    newTeam("Team 1"),
-    newTeam("Team 2"),
-  ]);
+  const [teams, setTeams] = useState<Team[]>(
+    Array.from({ length: 6 }, (_, i) => newTeam(t.defaultTeam(i + 1))),
+  );
   const [hydrated, setHydrated] = useState(false);
   const [ascending, setAscending] = useState(false);
   const [theme, setTheme] = useState<"light" | "dark">("light");
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     try {
@@ -240,6 +244,15 @@ function TriviaScorer() {
     [teams, totals],
   );
 
+  const displayedTeams = useMemo(() => {
+    const q = search.trim().toLowerCase();
+    const sorted = [...teams].sort((a, b) =>
+      a.name.localeCompare(b.name, undefined, { sensitivity: "base" }),
+    );
+    return q ? sorted.filter((tm) => tm.name.toLowerCase().includes(q)) : sorted;
+  }, [teams, search]);
+
+
   const updateName = (id: string, name: string) =>
     setTeams((ts) => ts.map((tm) => (tm.id === id ? { ...tm, name } : tm)));
 
@@ -268,7 +281,8 @@ function TriviaScorer() {
   const removeTeam = (id: string) =>
     setTeams((ts) => (ts.length > 1 ? ts.filter((tm) => tm.id !== id) : ts));
 
-  const resetAll = () => setTeams([newTeam(t.defaultTeam(1)), newTeam(t.defaultTeam(2))]);
+  const resetAll = () =>
+    setTeams(Array.from({ length: 6 }, (_, i) => newTeam(t.defaultTeam(i + 1))));
 
   return (
     <main className="mx-auto max-w-6xl px-4 py-10 sm:py-14">
@@ -295,6 +309,14 @@ function TriviaScorer() {
           </div>
         </div>
         <div className="flex flex-wrap gap-2">
+          <Input
+            type="search"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder={t.searchPlaceholder}
+            aria-label={t.searchPlaceholder}
+            className="h-9 w-[160px] bg-input"
+          />
           <Select value={lang} onValueChange={(v) => setLang(v as Lang)}>
             <SelectTrigger className="h-9 w-[130px]" aria-label={t.language}>
               <SelectValue />
@@ -323,7 +345,7 @@ function TriviaScorer() {
 
       {/* Team scoring cards */}
       <div className="grid gap-4">
-        {teams.map((tm) => {
+        {displayedTeams.map((tm) => {
           const rank = ranked.findIndex((r) => r.id === tm.id);
           const total = totals.get(tm.id) ?? 0;
           const medal =
