@@ -154,12 +154,16 @@ const ROUNDS = 6;
 type Team = {
   id: string;
   name: string;
+  nameEdited: boolean;
   scores: (number | null)[];
   doubleRound: number | null;
 };
 
 const STORAGE_KEY = "pub-trivia-state-v2";
 const LANG_KEY = "pub-trivia-lang";
+
+// Matches the auto-generated default names ("Team 1", "Équipe 3", "チーム 2", "Equipo 5", …)
+const DEFAULT_NAME_RE = /^(Team|Équipe|チーム|Equipo)\s*\d+$/i;
 
 function newTeam(name = ""): Team {
   return {
