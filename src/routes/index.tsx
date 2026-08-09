@@ -154,6 +154,7 @@ const ROUNDS = 6;
 type Team = {
   id: string;
   name: string;
+  nameEdited: boolean;
   scores: (number | null)[];
   doubleRound: number | null;
 };
@@ -161,10 +162,14 @@ type Team = {
 const STORAGE_KEY = "pub-trivia-state-v2";
 const LANG_KEY = "pub-trivia-lang";
 
-function newTeam(name = ""): Team {
+// Matches the auto-generated default names ("Team 1", "Équipe 3", "チーム 2", "Equipo 5", …)
+const DEFAULT_NAME_RE = /^(Team|Équipe|チーム|Equipo)\s*\d+$/i;
+
+function newTeam(name = "", nameEdited = false): Team {
   return {
     id: crypto.randomUUID(),
     name,
+    nameEdited,
     scores: Array(ROUNDS).fill(null),
     doubleRound: null,
   };
@@ -176,7 +181,15 @@ function loadState(): Team[] | null {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return null;
     const parsed = JSON.parse(raw);
-    if (Array.isArray(parsed)) return parsed;
+    if (Array.isArray(parsed)) {
+      return parsed.map((tm) => ({
+        ...tm,
+        nameEdited:
+          typeof tm.nameEdited === "boolean"
+            ? tm.nameEdited
+            : !DEFAULT_NAME_RE.test(String(tm.name ?? "").trim()),
+      }));
+    }
     return null;
   } catch {
     return null;
@@ -254,7 +267,9 @@ function TriviaScorer() {
 
 
   const updateName = (id: string, name: string) =>
-    setTeams((ts) => ts.map((tm) => (tm.id === id ? { ...tm, name } : tm)));
+    setTeams((ts) =>
+      ts.map((tm) => (tm.id === id ? { ...tm, name, nameEdited: true } : tm)),
+    );
 
   const updateScore = (id: string, idx: number, raw: string) => {
     const val = raw === "" ? null : Number(raw);
@@ -364,10 +379,10 @@ function TriviaScorer() {
                     #{rank + 1}
                   </span>
                   <Input
-                    value={tm.name}
+                    value={tm.nameEdited ? tm.name : ""}
                     onChange={(e) => updateName(tm.id, e.target.value)}
-                    placeholder={t.teamName}
-                    aria-label={t.teamName}
+                    placeholder={tm.nameEdited ? t.teamName : tm.name}
+                    aria-label={tm.nameEdited ? t.teamName : tm.name}
                     className="h-11 min-w-[200px] bg-input text-lg font-semibold"
                   />
                 </div>
