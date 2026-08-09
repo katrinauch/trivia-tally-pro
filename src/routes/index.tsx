@@ -181,7 +181,15 @@ function loadState(): Team[] | null {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return null;
     const parsed = JSON.parse(raw);
-    if (Array.isArray(parsed)) return parsed;
+    if (Array.isArray(parsed)) {
+      return parsed.map((tm) => ({
+        ...tm,
+        nameEdited:
+          typeof tm.nameEdited === "boolean"
+            ? tm.nameEdited
+            : !DEFAULT_NAME_RE.test(String(tm.name ?? "").trim()),
+      }));
+    }
     return null;
   } catch {
     return null;
