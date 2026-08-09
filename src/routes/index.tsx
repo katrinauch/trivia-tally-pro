@@ -267,7 +267,9 @@ function TriviaScorer() {
 
 
   const updateName = (id: string, name: string) =>
-    setTeams((ts) => ts.map((tm) => (tm.id === id ? { ...tm, name } : tm)));
+    setTeams((ts) =>
+      ts.map((tm) => (tm.id === id ? { ...tm, name, nameEdited: true } : tm)),
+    );
 
   const updateScore = (id: string, idx: number, raw: string) => {
     const val = raw === "" ? null : Number(raw);
