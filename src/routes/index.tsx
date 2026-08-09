@@ -379,10 +379,10 @@ function TriviaScorer() {
                     #{rank + 1}
                   </span>
                   <Input
-                    value={tm.name}
+                    value={tm.nameEdited ? tm.name : ""}
                     onChange={(e) => updateName(tm.id, e.target.value)}
-                    placeholder={t.teamName}
-                    aria-label={t.teamName}
+                    placeholder={tm.nameEdited ? t.teamName : tm.name}
+                    aria-label={tm.nameEdited ? t.teamName : tm.name}
                     className="h-11 min-w-[200px] bg-input text-lg font-semibold"
                   />
                 </div>
