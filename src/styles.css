@@ -37,26 +37,26 @@
 
 :root {
   --radius: 0.75rem;
-  /* Bright, clean: warm white background, deep ink text, vivid teal accent */
-  --background: oklch(0.99 0.005 95);
-  --foreground: oklch(0.2 0.02 250);
+  /* Teal page background, deep ink card text, vivid teal accents */
+  --background: oklch(0.62 0.16 200);
+  --foreground: oklch(0.99 0.005 95);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.2 0.02 250);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.2 0.02 250);
-  --primary: oklch(0.62 0.16 200);
+  --primary: oklch(0.55 0.15 200);
   --primary-foreground: oklch(0.99 0.005 95);
-  --secondary: oklch(0.96 0.01 230);
-  --secondary-foreground: oklch(0.2 0.02 250);
-  --muted: oklch(0.96 0.01 230);
-  --muted-foreground: oklch(0.5 0.02 250);
-  --accent: oklch(0.92 0.05 200);
-  --accent-foreground: oklch(0.25 0.05 220);
+  --secondary: oklch(0.55 0.13 205);
+  --secondary-foreground: oklch(0.99 0.005 95);
+  --muted: oklch(0.68 0.14 202);
+  --muted-foreground: oklch(0.96 0.01 100);
+  --accent: oklch(0.7 0.14 200);
+  --accent-foreground: oklch(0.15 0.02 250);
   --destructive: oklch(0.6 0.22 25);
   --destructive-foreground: oklch(0.99 0.005 95);
-  --border: oklch(0.9 0.01 230);
-  --input: oklch(0.97 0.005 230);
-  --ring: oklch(0.62 0.16 200);
+  --border: oklch(0.72 0.13 203);
+  --input: oklch(0.99 0.005 95);
+  --ring: oklch(0.72 0.16 200);
   --gold: oklch(0.78 0.16 85);
   --silver: oklch(0.7 0.02 250);
   --bronze: oklch(0.6 0.13 50);
