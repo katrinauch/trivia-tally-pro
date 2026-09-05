@@ -9,9 +9,9 @@ export const Route = createFileRoute("/privacy-policy")({
       { property: "og:title", content: "Privacy Policy — Pub Trivia Scorekeeper" },
       { property: "og:description", content: "Privacy policy for Pub Trivia Scorekeeper. We collect no personal data; all scores are stored locally on your device." },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "https://trivia-tally-pro.lovable.app/privacy-policy" },
+      { property: "og:url", content: "https://pubtriviascorekeeper.lovable.app/privacy-policy" },
     ],
-    links: [{ rel: "canonical", href: "https://trivia-tally-pro.lovable.app/privacy-policy" }],
+    links: [{ rel: "canonical", href: "https://pubtriviascorekeeper.lovable.app/privacy-policy" }],
   }),
 });
 
