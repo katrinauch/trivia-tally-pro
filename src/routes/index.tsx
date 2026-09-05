@@ -121,17 +121,6 @@ function SupportPage() {
         ) : (
           <form onSubmit={handleSubmit} className="grid gap-5" noValidate>
             <div className="grid gap-2">
-              <Label htmlFor="support-name">Name (optional)</Label>
-              <Input
-                id="support-name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="Your name or team name"
-                maxLength={100}
-                className="bg-input"
-              />
-            </div>
-            <div className="grid gap-2">
               <Label htmlFor="support-email">Email (optional — for a reply)</Label>
               <Input
                 id="support-email"
