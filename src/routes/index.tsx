@@ -11,7 +11,6 @@ import logo from "@/assets/logo.png";
 const SUPPORT_EMAIL = "katrinauch@gmail.com";
 
 const feedbackSchema = z.object({
-  name: z.string().trim().max(100, "Name must be under 100 characters"),
   email: z
     .string()
     .trim()
