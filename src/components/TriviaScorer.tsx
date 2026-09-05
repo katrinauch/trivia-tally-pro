@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { Trophy, Plus, Trash2, Beer, Sun, Moon } from "lucide-react";
 import { Button } from "@/components/ui/button";
