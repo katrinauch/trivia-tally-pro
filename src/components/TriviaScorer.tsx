@@ -135,19 +135,6 @@ const LANG_LABELS: Record<Lang, string> = {
   es: "Español",
 };
 
-export const Route = createFileRoute("/")({
-  component: TriviaScorer,
-  head: () => ({
-    meta: [
-      { title: "Pub Trivia Scorekeeper — 6 Rounds, Live Standings" },
-      { name: "description", content: "Score pub trivia in real time. Track teams across 6 rounds, let each team pick a double-points round, and auto-sort the leaderboard." },
-      { property: "og:title", content: "Pub Trivia Scorekeeper — 6 Rounds, Live Standings" },
-      { property: "og:description", content: "Score pub trivia in real time. Track teams across 6 rounds, let each team pick a double-points round, and auto-sort the leaderboard." },
-      { property: "og:url", content: "https://trivia-tally-pro.lovable.app/" },
-    ],
-    links: [{ rel: "canonical", href: "https://trivia-tally-pro.lovable.app/" }],
-  }),
-});
 
 const ROUNDS = 6;
 
@@ -196,7 +183,7 @@ function loadState(): Team[] | null {
   }
 }
 
-function TriviaScorer() {
+export function TriviaScorer() {
   const [lang, setLang] = useState<Lang>("en");
   const t = translations[lang];
 
