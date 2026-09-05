@@ -51,7 +51,6 @@ export const Route = createFileRoute("/")({
 });
 
 function SupportPage() {
-  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -59,20 +58,16 @@ function SupportPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const result = feedbackSchema.safeParse({ name, email, message });
+    const result = feedbackSchema.safeParse({ email, message });
     if (!result.success) {
       setError(result.error.issues[0]?.message ?? "Please check your input");
       return;
     }
     setError(null);
 
-    const subject = encodeURIComponent(
-      `Pub Trivia Scorekeeper feedback${name ? ` from ${name}` : ""}`,
-    );
+    const subject = encodeURIComponent("Pub Trivia Scorekeeper feedback");
     const body = encodeURIComponent(
-      `${message}\n\n—\nName: ${name || "(not provided)"}\nReply to: ${
-        email || "(not provided)"
-      }`,
+      `${message}\n\n—\nReply to: ${email || "(not provided)"}`,
     );
     window.location.href = `mailto:${SUPPORT_EMAIL}?subject=${subject}&body=${body}`;
     setComposed(true);
