@@ -513,7 +513,16 @@ function TriviaScorer() {
       </section>
 
       <footer className="mt-12 text-center text-xs text-muted-foreground">
-        {t.footer}
+        <p>{t.footer}</p>
+        <p className="mt-2">
+          <Link to="/support" className="underline hover:text-foreground">
+            Support
+          </Link>
+          {" · "}
+          <Link to="/privacy-policy" className="underline hover:text-foreground">
+            Privacy policy
+          </Link>
+        </p>
       </footer>
     </main>
   );
