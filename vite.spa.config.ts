@@ -15,6 +15,9 @@ export default defineConfig({
     outDir: "dist-spa",
     emptyOutDir: true,
     sourcemap: false,
+    rollupOptions: {
+      input: path.resolve(__dirname, "spa/index.html"),
+    },
   },
   base: "./",
 });
